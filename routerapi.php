@@ -1,5 +1,8 @@
 <?php
-require_once 'libs/router/router.php';
+require_once 'app/router/router.php';
+require_once 'app/controller/pisos.controller.php';
+require_once 'app/model/pisos.model.php';
+
 
 // INSTANCIAR ROUTER
 $router = new Router();
@@ -9,9 +12,9 @@ $router = new Router();
 // valores por parametros: ('url','verbo','controllador','metodo')
 
 // Rutas Productos
-$router->addRoute('productos', 'get', 'PisosController', 'getPisos');
+$router->addRoute('productos', 'GET', 'PisosController', 'getPisos');
 $router->addRoute('productos/:id', 'get', 'PisosController', 'getPisoById');
-$router->addroute('productos', 'post', 'PisosController', 'addPiso');
+$router->addroute('productos', 'POST', 'PisosController', 'addPiso');
 $router->addRoute('productos/:id', 'delete', 'PisosController', 'deletePiso');
 $router->addRoute('productos/:id', 'put', 'PisosController', 'updatePiso');
 
