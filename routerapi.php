@@ -12,11 +12,11 @@ $router = new Router();
 // valores por parametros: ('url','verbo','controllador','metodo')
 
 // Rutas Productos
-$router->addRoute('productos', 'GET', 'PisosController', 'getPisos');
-$router->addRoute('productos/:id', 'get', 'PisosController', 'getPisoById');
-$router->addroute('productos', 'POST', 'PisosController', 'addPiso');
-$router->addRoute('productos/:id', 'delete', 'PisosController', 'deletePiso');
-$router->addRoute('productos/:id', 'put', 'PisosController', 'updatePiso');
+$router->addRoute('productos', 'GET', 'PisosController', 'getAll');
+$router->addRoute('productos/:id', 'GET', 'PisosController', 'get');
+$router->addroute('productos', 'POST', 'PisosController', 'create');
+$router->addRoute('productos/:id', 'DELETE', 'PisosController', 'delete');
+$router->addRoute('productos/:id', 'PUT', 'PisosController', 'update');
 
 
 // Rutas Categorias
