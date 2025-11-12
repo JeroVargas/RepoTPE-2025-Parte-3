@@ -10,6 +10,7 @@ class PisosController
     }
 
     function getAll($req, $res)
+    function getAll($req, $res)
     {
         $sort = isset($req->query->sort) ? $req->query->sort : null;
         $order = isset($req->query->order) ? $req->query->order : null;
