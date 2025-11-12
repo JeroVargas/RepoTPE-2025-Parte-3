@@ -12,15 +12,27 @@ class PisosModel
 
     //funcion para obetener TODOS los pisos y sus categorias
 
-    public function getPisos()
+    public function getPisos($sort = null, $order = null)
     {
+        $sql = 'SELECT p.*, c.nombre AS categoria FROM pisos p JOIN categorias c ON p.id_categoria = c.id';
 
-        $query = $this->db->prepare('SELECT p.*, c.nombre AS categoria FROM pisos p JOIN categorias c ON p.id_categoria = c.id');
+        if (isset($sort)) {
+            $allowedColumns = ['id', 'tipo_variante', 'origen', 'categoria'];
+            if (in_array($sort, $allowedColumns)) {
+                $sql .= ' ORDER BY ' . $sort;
+                if (isset($order)) {
+                    $allowedOrders = ['ASC', 'DESC'];
+                    $order = strtoupper($order);
+                    if (in_array($order, $allowedOrders)) {
+                        $sql .= ' ' . $order;
+                    }
+                }
+            }
+        }
 
+        $query = $this->db->prepare($sql);
         $query->execute();
-
         $pisos = $query->fetchAll(PDO::FETCH_OBJ);
-
         return $pisos;
     }
 
@@ -37,13 +49,9 @@ class PisosModel
 
     public function getPiso($id)
     {
-
         $query = $this->db->prepare('SELECT p.*, c.nombre AS categoria FROM pisos p JOIN categorias c ON p.id_categoria = c.id WHERE p.id = ?');
-
         $query->execute([$id]);
-
         $piso = $query->fetch(PDO::FETCH_OBJ);
-
         return $piso;
     }
 
@@ -58,6 +66,8 @@ class PisosModel
     {
         $query = $this->db->prepare('UPDATE pisos SET id_categoria = ?, tipo_variante = ?, origen = ?, acabados_comunes = ?, uso_recomendado = ? WHERE id = ?');
         $query->execute([$id_categoria, $tipo_variante, $origen, $acabados_comunes, $uso_recomendado, $id]);
+        $actualizado = $query->fetch(PDO::FETCH_OBJ);
+        return $actualizado;
     }
 
     public function deletePisoById($id)

@@ -52,3 +52,46 @@ password: admin
 ## Imágenes del Proyecto
 
 - [Ver Imagen](349c28fd-a95e-450c-8a3d-085ac4d34c7b.jfif)
+
+---
+
+## API Endpoints
+
+### Autenticación por Token
+
+Algunos endpoints de la API requieren autenticación. Para acceder a ellos, primero debes obtener un token de autenticación y luego incluirlo en las cabeceras de tus solicitudes.
+
+**1. Obtener un Token (Login):**
+*   **Método:** `POST`
+*   **Endpoint:** `/login`
+*   **Cuerpo (JSON):** `{"email": "admin@todopisos.com", "password": "admin"}`
+*   **Respuesta:** `200 OK` con `{"token": "..."}`.
+
+**2. Usar el Token:**
+*   Para acceder a rutas protegidas, incluye el token en la cabecera `X-Authorization`.
+*   **Cabecera:** `X-Authorization: <TU_TOKEN_OBTENIDO>`
+
+### Recurso: Pisos (`productos`)
+
+| Método | Endpoint          | Descripción              | Requiere Auth | Parámetros / Cuerpo (JSON)                                                                                                     |
+|:-------|:------------------|:-------------------------|:--------------|:-------------------------------------------------------------------------------------------------------------------------------|
+| `GET`    | `/productos`      | Lista todos los pisos.   | No            | **Query (opcional):** `sort` (columna), `order` (ASC/DESC)                                                                     |
+| `GET`    | `/productos/{id}` | Obtiene un piso por ID.  | No            | **Ruta:** `id` del piso                                                                                                        |
+| `POST`   | `/productos`      | Crea un nuevo piso.      | Sí            | **Cuerpo:** `{ "id_categoria": ..., "tipo_variante": ..., "origen": ..., "acabados_comunes": ..., "uso_recomendado": ... }`      |
+| `PUT`    | `/productos/{id}` | Actualiza un piso por ID.| Sí            | **Ruta:** `id` del piso <br> **Cuerpo:** `{ "id_categoria": ..., "tipo_variante": ..., ... }`                                   |
+| `DELETE` | `/productos/{id}` | Elimina un piso por ID.  | Sí            | **Ruta:** `id` del piso                                                                                                        |
+
+**Ejemplo de ordenamiento:** `GET /productos?sort=origen&order=desc`
+
+
+### Recurso: Categorías (`categorias`)
+
+| Método | Endpoint          | Descripción                  | Requiere Auth | Parámetros / Cuerpo (JSON)                                   |
+|:-------|:------------------|:-----------------------------|:--------------|:-------------------------------------------------------------|
+| `GET`    | `/categorias`     | Lista todas las categorías.  | No            | **Query (opcional):** `sort` (columna), `order` (ASC/DESC)     |
+| `GET`    | `/categorias/{id}`| Obtiene una categoría por ID.| No            | **Ruta:** `id` de la categoría                               |
+| `POST`   | `/categoria`      | Crea una nueva categoría.    | Sí            | **Cuerpo:** `{ "nombre": "..." }`                            |
+| `PUT`    | `/categoria/{id}` | Actualiza una categoría por ID.| Sí            | **Ruta:** `id` de la categoría <br> **Cuerpo:** `{ "nombre": "..." }` |
+| `DELETE` | `/categoria/{id}` | Elimina una categoría por ID.| Sí            | **Ruta:** `id` de la categoría                               |
+
+**Ejemplo de ordenamiento:** `GET /categorias?sort=nombre&order=asc`
